@@ -9,7 +9,7 @@ EXPERIMENTNAME_SoloTE_output
 └── matrix.mtx
 ```
 
-Where "EXPERIMENTNAME" corresponds to the "OutputName" value used when running SoloTE. 
+Where "EXPERIMENTNAME" corresponds to the "OutputName" value used when running SoloTE. For the remaining of this tutorial, the files from the 2C like data available [here](https://github.com/bvaldebenitom/SoloTE/tree/main/Data_2Clike_SoloTE) will be used.
 
 
 Then, processing with Seurat could be done as follows (in this example, the [Seurat - Guided Clustering Tutorial](https://satijalab.org/seurat/articles/pbmc3k_tutorial.html) commands are used):
