@@ -52,7 +52,7 @@ newmarkers_signif_te <- newmarkers_signif[grep("SoloTE",newmarkers_signif$gene),
 head(newmarkers_signif_te)
 ```
 
-For this example, the following results can be obtained:
+Finally, a table containing the marker analysis from TEs can be obtained:
 ```
                                                               p_val avg_log2FC pct.1 pct.2 p_val_adj cluster                                                          gene
 SoloTE-chr18-80020461-80020681-Lx3C:L1:LINE-16.7-+-INTERGENIC     0   3.632743 0.798 0.005         0 2C-like SoloTE-chr18-80020461-80020681-Lx3C:L1:LINE-16.7-+-INTERGENIC
