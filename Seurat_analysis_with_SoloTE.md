@@ -17,11 +17,7 @@ Then, processing with Seurat could be done as follows (in this example, the [Seu
 ## Load libraries and files
 ```
 library(Seurat)
-library(ggplot2)
-matrix <- "matrix.mtx"
-barcodes <- "barcodes.tsv"
-features <- "features.tsv"
-solote_matrix <- ReadMtx(matrix,barcodes,features,feature.column=1)
+solote_matrix <- ReadMtx("matrix.mtx.gz","barcodes.tsv.gz","features.tsv.gz",feature.column=1)
 solote_seuratobj <- CreateSeuratObject(count=solote_matrix,min.cells=3,project="SoloTE")
 ```
 
