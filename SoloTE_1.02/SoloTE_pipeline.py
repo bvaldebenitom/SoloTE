@@ -60,19 +60,19 @@ print(co_line.split("--"))
 
 
 outsammultnmax_value = (list(filter(lambda x:'outSAMmultNmax 1' in x,co_line.split("--"))))
-#print(len(outsammultnmax_value))
+print(len(outsammultnmax_value))
 if len(outsammultnmax_value)!=1:
     print("outSAMmultNmax 1 option missing in BAM file")
-#    exit()
+    exit()
 
-##samtags_from_star = (list(filter(lambda x:'outSAMattributes' in x,co_line.split("--"))))
-##print(samtags_from_star[0])
-##
-##if "CB" in samtags_from_star[0] and "UB" in samtags_from_star[0]:
-##    print("CB and UB tags present in BAM file")
-##else:
-##    print("CB and UB tags not present in BAM file")
-##    exit()
+samtags_from_star = (list(filter(lambda x:'outSAMattributes' in x,co_line.split("--"))))
+print(samtags_from_star[0])
+
+if "CB" in samtags_from_star[0] and "UB" in samtags_from_star[0]:
+    print("CB and UB tags present in BAM file")
+else:
+    print("CB and UB tags not present in BAM file")
+    exit()
 
 cpus = sys.argv[2]
 outbase = sys.argv[3]
@@ -87,10 +87,6 @@ outdir = outbase+"/"+outprefix+"_SoloTE_temp"
 workingdir = os.getcwd()
 #finaldir = os.getcwd()+"/"+outbase+"_SoloTE_output"
 finaldir = outbase+"/"+outprefix+"_SoloTE_output"
-print(finaldir)
-print(outdir)
-print(outbase)
-print(outprefix)
 
 outbase = outprefix
 
