@@ -4,7 +4,7 @@ SoloTE README
 
 ## 0. DEPENDENCIES
 SoloTE requires the following tools to be installed, and available in your PATH environment variable:
-- Samtools v1.11 or higher (http://www.htslib.org/download/)
+- Samtools v1.16 or higher (http://www.htslib.org/download/)
 - BEDTools v2.29.2 or higher (https://github.com/arq5x/bedtools2/releases)
 - R v4 or higher (https://www.r-project.org/)
 
