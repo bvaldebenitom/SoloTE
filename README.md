@@ -41,11 +41,12 @@ chr1	3004041	3004206	chr1|3004041|3004206|L1_Rod:L1:LINE|+	3685	+
 
 Once everything is set up, you can run the SoloTE script with the configuration file:
 ```
-python SoloTE_pipeline.py BAMfile Threads OutputName TEannotationBEDfile
+python SoloTE_pipeline.py BAMfile Threads OutputDir TEannotationBEDfile OutputPrefix
 ```
 where
 - BAMfile: relative or full path to the CellRanger / STAR BAM file containing the CB and UB tags
 - Threads: Number of threads to use during the pipeline 
-- OutputName: Name for output directory and pipeline files
+- OutputDir: Name for output directory
 - TEannotationBEDfile: Name of TE annotation file in BED format generated with convertRMOut_to_SoloTEinput.sh
+- OutputPrefix: Prefix for output files
 
