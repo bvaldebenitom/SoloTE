@@ -10,6 +10,7 @@ SoloTE requires the following tools to be installed, and available in your PATH 
 
 Also, Python3.9.5 or higher should be available in your computer, along with the following modules:
 - Pysam (https://pysam.readthedocs.io/en/latest/installation.html)
+- Pandas v1.5.0 or higher (https://pandas.pydata.org/)
 
 
 ## 1. SETTING UP NECESSARY FILES
