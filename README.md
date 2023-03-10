@@ -1,4 +1,5 @@
 # SoloTE
+[![DOI](https://img.shields.io/badge/DOI-10.1038%2Fs42003--022--04020--5-yellow)](https://www.nature.com/articles/s42003-022-04020-5)
 
 SoloTE README
 
