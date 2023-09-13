@@ -51,7 +51,9 @@ chr1	19972	20405	chr1|19972|20405|L3:CR1:LINE|31.2|+	31.2	+
 ## 2. RUNNING SOLOTE
 
 Once everything is set up, you can run the SoloTE script:
-```python SoloTE_pipeline.py --threads NumberOfThreads --bam BAMfile --teannotation BEDfile --outputprefix Prefix --outputdir OutputDirectory```
+```
+python SoloTE_pipeline.py --threads NumberOfThreads --bam BAMfile --teannotation BEDfile --outputprefix Prefix --outputdir OutputDirectory
+```
 
 where
 
