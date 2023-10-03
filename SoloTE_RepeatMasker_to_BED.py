@@ -2,6 +2,7 @@
 import argparse
 import pandas
 import requests
+import os
 from colorama import Fore, init
 from tqdm import tqdm
 
@@ -101,6 +102,7 @@ if mode == "RepeatMasker":
 	if genome_assembly == "hs1":
 		rmsk_url = "https://hgdownload.soe.ucsc.edu/goldenPath/"+genome_assembly+"/bigZips/"+genome_assembly+".repeatMasker.out.gz"
 
+
 	print("[LOG] URL to fetch RepeatMasker file: "+rmsk_url)
 	rmsk_filename = genome_assembly+'.fa.out.gz'
 	print("[LOG] Downloading RepeatMasker file to "+rmsk_filename)
@@ -111,6 +113,7 @@ if mode == "RepeatMasker":
 	rmsk_out = pandas.read_csv(rmsk_filename,compression="gzip",skiprows=3,header=None,sep=" ",skipinitialspace=True)
 	rmsk_out.columns = ['SW_score','percDiv','percDel','percIns','querySeq','queryStart','queryEnd','queryLeft','strand','matchingRepeat','repeatClass_Family','repeatBegin','repeatStart','repeatEnd','ID']
 	repeatinfo = rmsk_out['repeatClass_Family'].str.split("/",expand=True)
+	repeatinfo = repeatinfo.fillna(value="-") 
 	rmsk_out['repeatID'] = rmsk_out['matchingRepeat']+":"+repeatinfo[1]+":"+repeatinfo[0]
 	rmsk_out['percDiv'] = rmsk_out['percDiv'].astype(str)
 	rmsk_out['queryStart'] = rmsk_out['queryStart'].astype(str)
