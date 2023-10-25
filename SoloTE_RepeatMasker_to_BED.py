@@ -12,11 +12,12 @@ argparse_object = argparse.ArgumentParser(description="SoloTE RepeatMasker to BE
 
 argparse_object.add_argument("-g","--genome",help="Genome assembly identifier to obtain RepeatMasker annotation (available genomes can be checked with option -l).")
 argparse_object.add_argument("-l","--list",help="List available genomes at the UCSC database.",action='store_true',required=False)
+argparse_object.add_argument("-i","--inputfile",help="Process your own RepeatMasker file.")
 
 commandargs = argparse_object.parse_args()
-
 list_genomes = commandargs.list
 genome_assembly = commandargs.genome
+input_file = commandargs.inputfile
 
 mode = "RepeatMasker"
 
@@ -47,6 +48,31 @@ if list_genomes == True:
 		scientificname = current['scientificName']
 		organism = current['organism']
 		print(genome+"\t| "+organism+" ["+scientificname+", "+genome_description+"]")
+	exit()
+
+
+if input_file:
+	rmsk_filename = input_file
+	genome_assembly = rmsk_filename.replace(".gz","")
+	genome_assembly = genome_assembly.replace(".fa.out","")
+	rmsk_bed_filename = genome_assembly+'_rmsk.bed'
+	print(f"[LOG] Beginning conversion of RepeatMasker file {rmsk_filename} to BED format")
+	rmsk_out = pandas.read_csv(rmsk_filename,compression="gzip",skiprows=3,header=None,sep=" ",skipinitialspace=True)
+	rmsk_out.columns = ['SW_score','percDiv','percDel','percIns','querySeq','queryStart','queryEnd','queryLeft','strand','matchingRepeat','repeatClass_Family','repeatBegin','repeatStart','repeatEnd','ID']
+	repeatinfo = rmsk_out['repeatClass_Family'].str.split("/",expand=True)
+	repeatinfo = repeatinfo.fillna(value="-")
+	rmsk_out['repeatID'] = rmsk_out['matchingRepeat']+":"+repeatinfo[1]+":"+repeatinfo[0]
+	rmsk_out['percDiv'] = rmsk_out['percDiv'].astype(str)
+	rmsk_out['queryStart'] = rmsk_out['queryStart'].astype(str)
+	rmsk_out['queryEnd'] = rmsk_out['queryEnd'].astype(str)
+	rmsk_out['fixedStrand'] = rmsk_out['strand'].str.replace("C","-")
+	rmsk_out['te_name'] = rmsk_out['querySeq']+"|"+rmsk_out['queryStart']+"|"+rmsk_out['queryEnd']+"|"+rmsk_out['repeatID']+"|"+rmsk_out['percDiv']+"|"+rmsk_out['fixedStrand']
+	rmsk_out_bed = rmsk_out[['querySeq','queryStart','queryEnd','te_name','percDiv','fixedStrand']]
+	rmsk_out_bed = rmsk_out_bed[rmsk_out['repeatClass_Family'].str.contains("LINE|SINE|LTR|DNA|RC")]
+	rmsk_out_bed = rmsk_out_bed[~rmsk_out_bed['querySeq'].str.contains("chrna|_fix|_random|_alt|chrUn")]
+	rmsk_out_bed.to_csv(rmsk_bed_filename,sep="\t",header=None,index=False)
+	print(Fore.GREEN+"[OK] ",end='')
+	print("Finished generating "+rmsk_bed_filename)
 	exit()
 
 
@@ -96,6 +122,7 @@ if mode == 'UCSC':
 	print("Finished generating "+rmsk_bed_filename)
 
 
+delete_rmsk = False
 if mode == "RepeatMasker":
 	rmsk_url = "https://hgdownload.soe.ucsc.edu/goldenPath/"+genome_assembly+"/bigZips/"+genome_assembly+".fa.out.gz"
 
@@ -107,6 +134,9 @@ if mode == "RepeatMasker":
 	rmsk_filename = genome_assembly+'.fa.out.gz'
 	print("[LOG] Downloading RepeatMasker file to "+rmsk_filename)
 	download(url=rmsk_url,fname=rmsk_filename)
+
+	if input_file:
+                rmsk_filename = input_file
 
 	rmsk_bed_filename = genome_assembly+'_rmsk.bed'
 	print("[LOG] Beginning conversion of RepeatMasker file to BED format")
@@ -128,7 +158,8 @@ if mode == "RepeatMasker":
 	print("Finished generating "+rmsk_bed_filename)
 
 
-os.remove(rmsk_filename)
+if delete_rmsk:
+	os.remove(rmsk_filename)
 
 
 
