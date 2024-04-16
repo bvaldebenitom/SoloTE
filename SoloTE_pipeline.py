@@ -214,6 +214,15 @@ for countfile in result_list:
 allcounts = pd.read_table(allcountsfile,header=None)
 tecounts = allcounts[allcounts[0].str.contains("SoloTE")]
 tecounts2 = tecounts[0].str.split("|",expand=True)
+
+if tecounts2.shape[1]==2:
+    print("WARNING: Your dataset doesn't contain locus-specific TEs. Please check that uniquely-mapped reads in your BAM files have MAPQ = 255")
+    tecounts2[2]=None
+    tecounts2[3]=None
+    tecounts2[4]=tecounts2[1]
+    tecounts2[5]=None
+    tecounts2[6]=None
+
 tecounts2.loc[tecounts2[4].isnull(),4] = tecounts2.loc[tecounts2[4].isnull(),1]
 te_table = allcounts[allcounts[0].str.contains("SoloTE")]
 te_annotation = tecounts2[4].str.split(":",expand=True)
