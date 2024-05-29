@@ -17,7 +17,7 @@ import shutil
 import argparse
 
 
-solote_version = "1.09"
+solote_version = "1.10"
 argparse_object = argparse.ArgumentParser(prog="SoloTE version "+solote_version,description="Analysis of transposable elements in single-cell RNA-Seq data using locus-specific expression")
 
 argparse_object.add_argument("-b","--bam",help="Input BAM file with CB and UB tags",required=True)
@@ -134,7 +134,7 @@ if os.path.exists(te_bam):
 else:
 #    cmd="samtools view --threads "+cpus+" -O BAM -o "+te_bam+" -L "+TE_bed+" "+bam_without_genes
     if mode == "Dual":
-       cmd="samtools view -@ "+cpus+" -O BAM -o "+te_bam+" -L "+TE_bed+" -e '(exists([CB]) && exists([UB]) && [CB]!=\"-\" && [UB]!=\"-\") "+inputbam
+       cmd="samtools view -@ "+cpus+" -O BAM -o "+te_bam+" -L "+TE_bed+" -e '(exists([CB]) && exists([UB]) && [CB]!=\"-\" && [UB]!=\"-\")' "+inputbam
     else:
        cmd="samtools view -@ "+cpus+" -O BAM -o "+te_bam+" -L "+TE_bed+" -e '(exists([CB]) && exists([UB]) && [CB]!=\"-\" && [UB]!=\"-\") && (!exists([GN]) || [GN]==\"-\")' "+inputbam
     print(cmd)
